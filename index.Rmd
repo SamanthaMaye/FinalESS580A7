@@ -1,0 +1,18 @@
+--- 
+title: "ESS 580A7 Final"
+author: "Samantha Clark"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+github-repo: rstudio/finalbookdown
+description: "ESS 580A7 Final Bookdown"
+---
+
+# Introduction
+
+This is my final for ESS 580A7, Introduction to Environmental Data Science. Each chapter is an assignment from each week of the course. 
+
+The beginning of each assignment contains code written by Matthew Ross and Nathan Mueller. 
+
+

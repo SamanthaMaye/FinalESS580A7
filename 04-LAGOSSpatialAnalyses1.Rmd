@@ -1,0 +1,181 @@
+# Assignment 4: LAGOS Spatial Analyses 1
+
+title: "LAGOS Spatial Analysis"
+author: "Matthew Ross, completed by Samantha Clark"
+date: "2/23/2022"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+  
+```{r setup assign4, include=FALSE}
+library(tidyverse) # Tidy packages
+library(sf) #Spatial package that can read and create shapefiles 
+library(mapview) #Interactive maps
+
+mapviewOptions(fgb = F)
+
+library(LAGOSNE) #Lots and lots of clean lake data
+library(USAboundaries) #USA states and counties
+```
+
+
+## LAGOS Analysis
+
+
+### Loading in data
+```{r assign4 load data, eval = F}
+#install.packages(c("RApiSerialize", "LAGOSNE", 'USAboundaries'))
+
+#LAGOSNE::lagosne_get(dest_folder = LAGOSNE:::lagos_path())
+```
+
+
+#### First download and then specifically grab the locus (or site lat longs)
+
+```{r assign4 data-read}
+# #Lagos download script
+#LAGOSNE::lagosne_get(dest_folder = LAGOSNE:::lagos_path())
+
+
+#Load in lagos
+lagos <- lagosne_load()
+
+#Grab the lake centroid info
+lake_centers <- lagos$locus
+
+
+
+```
+
+
+
+#### Convert to spatial data
+```{r assign4 spatial data}
+#Look at the column names
+#names(lake_centers)
+
+#Look at the structure
+#str(lake_centers)
+
+#View the full dataset
+#View(lake_centers %>% slice(1:100))
+
+spatial_lakes <- st_as_sf(lake_centers,coords=c('nhd_long','nhd_lat'),
+                          crs=4326) %>%
+  st_transform(2163)
+
+#Subset for plotting
+subset_spatial <- spatial_lakes %>%
+  slice(1:100) 
+
+subset_baser <- spatial_lakes[1:100,]
+
+#Dynamic mapviewer
+mapview(subset_spatial)
+
+```
+
+
+#### Subset to only Minnesota
+
+```{r assign4 subset}
+states <- us_states()
+
+#Plot all the states to check if they loaded
+#mapview(states)
+minnesota <- states %>%
+  filter(name == 'Minnesota') %>%
+  st_transform(2163)
+
+#Subset lakes based on spatial position
+minnesota_lakes <- spatial_lakes[minnesota,]
+
+#Plotting the first 1000 lakes
+minnesota_lakes %>%
+  arrange(-lake_area_ha) %>%
+    slice(1:1000) %>%
+  st_transform(4326) %>%
+  mapview()
+
+mapviewOptions(fgb = F)
+
+
+```
+
+
+
+## In-Class work
+
+
+### 1) Show a map outline of Iowa and Illinois (similar to Minnesota map upstream)
+
+```{r assign4 ques1}
+
+#subset to Iowa and Illinois
+IAandIL <- states %>%
+  filter(name %in% c('Iowa', 'Illinois')) %>%
+  st_transform(2163) 
+
+#create a map
+mapview(IAandIL)
+
+```
+
+
+
+### 2) Subset LAGOS data to these sites, how many sites are in Illinois and Iowa combined? How does this compare to Minnesota?
+
+```{r assign4 ques2}
+#Subset lakes based on spatial position
+IAandIL_lakes <- spatial_lakes[IAandIL,]
+
+nrow(IAandIL_lakes)
+nrow(minnesota_lakes)
+```
+Illinois and Iowa have 16,466 sites. Minnesota has 29,038 sites. This is nearly double the number of sites, compared to Illinois and Iowa combined.
+
+
+### 3) What is the distribution of lake size in Iowa vs. Minnesota?
+
+- Here I want to see a histogram plot with lake size on x-axis and frequency on 
+y axis (check out geom_histogram)
+- make histogram log
+
+```{r assign4 ques3}
+# subset to just Iowa data
+iowa <- states %>%
+  filter(name == 'Iowa') %>%
+  st_transform(2163)
+
+# create spatial lake data for Iowa
+iowa_lakes <- spatial_lakes[iowa,]
+iowa_lakes$state <- 'Iowa' 
+
+# get a lakes set for Minnesota
+minnesota_lakes$state <- 'Minnesota'
+
+#Combine Iowa and Minnesota Data
+IAandMN_lakes <- bind_rows(iowa_lakes, minnesota_lakes)
+
+names(IAandMN_lakes)
+
+#Plot the lakes
+ggplot(IAandMN_lakes) + aes(x=lake_area_ha, fill = state) +geom_histogram()+ scale_x_log10() + ylab('Frequency') +xlab('Lake Size in Hectares') + facet_wrap(vars(state))
+
+```
+
+
+There are more lakes in Minnesota than in Iowa, but the distribution of lakes is similar. For both states there are a greater number of smaller lakes, and a smaller number of large lakes. 
+
+### 4) Make an interactive plot of lakes in Iowa and Illinois and color them by lake area in hectares
+
+```{r assign4 ques4}
+# Use mapview to create an interactive plot of lakes
+mapview(IAandIL_lakes, zcol = "lake_area_ha", at = c(0, 5, 10, 100, 250, 500, 750, 1000, 5000, 10000))
+```
+
+
+### 5) What other data sources might we use to understand how reservoirs and natural lakes vary in size in these three states? 
+
+During the different seasons, and different conditions such as drought, lakes will vary in the amount of water they hold. It would be insightful to find a data source that included depth information, and variance in size and depth throughout the year. This would be very helpful in understanding how lakes differ between these states. 
+It may also be interesting to see what different states' definitions are for lakes, and to see if that may influence the data when looking at the number of lakes and their sizes in the different states.

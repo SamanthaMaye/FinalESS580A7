@@ -1,0 +1,314 @@
+# Assignment 3: Snow Functions Iteration 
+
+title: "Snow Data Assignment: Web Scraping, Functions, and Iteration"
+author: "Samantha Clark"
+date: "2-7-2022"
+output: html_document
+
+```{r setup assign3, include=FALSE}
+#Prepare Libraries Needed
+library(rvest)
+library(tidyverse)
+library(lubridate)
+library(readxl)
+```
+
+
+## Simple web scraping
+
+R can read html using either rvest, xml, or xml2 packages. Here we are going to navigate to the Center for Snow and Avalance Studies  [Website](https://snowstudies.org/archived-data/) and read a table in. This table contains links to data we want to programatically download for three sites. We don't know much about these sites, but they contain incredibly rich snow, temperature, and precip data. 
+
+
+### Reading an html 
+
+#### Extract CSV links from webpage
+
+```{r assign3 read in}
+site_url <- 'https://snowstudies.org/archived-data/'
+
+#Read the web url
+webpage <- read_html(site_url)
+
+#See if we can extract tables and get the data that way
+tables <- webpage %>%
+  html_nodes('table') %>%
+  magrittr::extract2(3) %>%
+  html_table(fill = TRUE)
+#That didn't work, so let's try a different approach
+
+#Extract only weblinks and then the URLs!
+links <- webpage %>%
+  html_nodes('a') %>%
+  .[grepl('24hr',.)] %>%
+  html_attr('href')
+
+```
+
+### Data Download
+
+#### Download data in a for loop
+
+```{r data download assign3}
+
+#Grab only the name of the file by splitting out on forward slashes
+splits <- str_split_fixed(links,'/',8)
+
+#Keep only the 8th column
+dataset <- splits[,8] 
+
+#generate a file list for where the data goes
+file_names <- paste0('data/',dataset)
+
+for(i in 1:3){
+  download.file(links[i],destfile=file_names[i])
+}
+
+downloaded <- file.exists(file_names)
+
+evaluate <- !all(downloaded)
+
+```
+
+
+#### Download data in a map
+
+```{r assign3 download}
+
+#Map version of the same for loop (downloading 3 files)
+if(evaluate == T){
+  map2(links[1:3],file_names[1:3],download.file)
+}else{print('data already downloaded')}
+
+```
+
+### Data read-in 
+
+#### Read in just the snow data as a loop
+
+```{r data readin assign3}
+#Pattern matching to only keep certain files
+snow_files <- file_names %>%
+  .[!grepl('SG_24',.)] %>%
+  .[!grepl('PTSP',.)]
+
+#empty_data <- list()
+
+# snow_data <- for(i in 1:length(snow_files)){
+#   empty_data[[i]] <- read_csv(snow_files[i]) %>%
+#     select(Year,DOY,Sno_Height_M)
+# }
+
+#snow_data_full <- do.call('rbind',empty_data)
+
+#summary(snow_data_full)
+```
+
+
+#### Read in the data as a map function
+
+```{r assign3 map function}
+
+#Create a map function
+our_snow_reader <- function(file){
+  name = str_split_fixed(file,'/',2)[,2] %>%
+    gsub('_24hr.csv','',.)
+  df <- read_csv(file) %>%
+    select(Year,DOY,Sno_Height_M) %>%
+    mutate(site = name)
+}
+#read in the data with function
+snow_data_full <- map_dfr(snow_files,our_snow_reader)
+
+summary(snow_data_full)
+```
+
+
+#### Plot snow data
+
+```{r assign3 plot}
+#create a new data set from full data (group data and get means)
+snow_yearly <- snow_data_full %>%
+  group_by(Year,site) %>%
+  summarize(mean_height = mean(Sno_Height_M,na.rm=T))
+
+#plot the new data set
+ggplot(snow_yearly,aes(x=Year,y=mean_height,color=site)) + 
+  geom_point() +
+  ggthemes::theme_few() + 
+  ggthemes::scale_color_few()
+```
+
+
+## Assignment:
+
+1. Extract the meteorological data URLs. Here we want you to use the `rvest` package to get the URLs for the `SASP forcing` and `SBSP_forcing` meteorological datasets.
+
+```{r assign3 ques1}
+library(rvest)
+
+site_url1 <- 'https://snowstudies.org/archived-data/'
+
+#Read the web url
+webpage1 <- read_html(site_url1)
+
+#extract weblinks and urls
+hwlinks <- webpage1 %>%
+  html_nodes('a') %>%
+  .[grepl('forcing',.)] %>%
+  html_attr('href')
+hwlinks
+```
+
+
+2. Download the meteorological data. Use the `download_file` and `str_split_fixed` commands to download the data and save it in your data folder. You can use a for loop or a map function. 
+
+```{r assign3 ques2}
+#Download data
+
+#Grab only the name of the file by splitting out on forward slashes
+hwsplit <- str_split_fixed(hwlinks,'/',8)
+
+#Keep only the 7th column
+hwdataset <- hwsplit[,8] 
+
+#generate a file list for where the data goes
+hwfilenames <- paste0('data/',hwdataset)
+
+for(i in 1:2){
+  download.file(hwlinks[i],destfile=hwfilenames[i])
+}
+
+hwdownloaded <- file.exists(hwfilenames)
+
+hwevaluate <- !all(hwdownloaded)
+```
+
+
+3. Write a custom function to read in the data and append a site column to the data. 
+
+```{r assign3 ques3}
+# Grab the variable names from the pdf
+library(pdftools)
+headers <- pdf_text('https://snowstudies.org/wp-content/uploads/2022/02/Serially-Complete-Metadata-text08.pdf') %>%
+  readr::read_lines(.) %>%
+  trimws(.) %>%
+  str_split_fixed(.,'\\.',2) %>%
+  .[,2] %>%
+  .[1:26] %>%
+  str_trim(side = "left") 
+
+#Read in data
+forcing_reader <- function(hwfilenames){
+  hwdf <- read_fwf(hwfilenames)
+  names(hwdf) = headers[1:26]
+  hdr1 = str_split_fixed(hwfilenames,'_', 3)[, 2]
+  mutate(hwdf, site=hdr1)
+
+}
+
+```
+
+
+4. Use the `map` function to read in both meteorological files. Display a summary of your tibble.
+
+```{r assign3 ques4}
+#use function to read in files
+forcing_data_full <- map_dfr(hwfilenames,forcing_reader)
+
+#show summary tibble
+summary(forcing_data_full)
+```
+
+
+5. Make a line plot of mean temp by year by site (using the `air temp [K]` variable). Is there anything suspicious in the plot? Adjust your filtering if needed.
+
+```{r assign3 ques5}
+# prep data, find means
+forcing_yearly <- forcing_data_full %>%
+  group_by(year, site) %>%
+  filter(year %in% c(2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011)) %>%
+  summarize(
+    mean = mean(`air temp [K]`)
+  )
+# plot
+ggplot(forcing_yearly, (aes(x=year, y=mean, color=site))) +geom_line()
+```
+On average, air temperature has increased over time from 2004 to 2011. The SBSP site's air temperature is on average, always a few degrees cooler than the SASP site. 
+2003 was filtered out due to containing a small amount of data only in winter, leading to a very cold mean, which is not representative. 
+
+6. Write a function that makes line plots of monthly average temperature at each site for a given year. Use a for loop to make these plots for 2005 to 2010. Are monthly average temperatures at the Senator Beck Study Plot ever warmer than the Snow Angel Study Plot?
+Hint: https://ggplot2.tidyverse.org/reference/print.ggplot.html
+
+```{r assign3 ques6}
+# write a function to plot
+lineplotter <- function(df,year){
+  temp_month <- df %>%
+    group_by(year, month, site) %>%
+    summarize(
+      meantemp = mean(`air temp [K]`, na.rm = T)) %>%
+    filter (yr == year)
+    
+  linegraph <-
+    ggplot(temp_month, aes(x= month, y= meantemp, color=site)) + geom_line() + labs(x = 'Month', y= 'Average Air Temperature [K]', title = yr)
+  
+  print(linegraph)
+}
+
+# create a list of years to plot
+years <- c(2005, 2006, 2007, 2008, 2009, 2010)
+
+#create a for loop
+for (yr in years){
+  lineplotter(forcing_data_full, year)
+}
+
+```
+Each year's average air temperature varies in a similar pattern, starting low in January/February, increasing until peaking around August and then decreasing again through the end of the year. This makes sense, as temperatures are lower in winter (beginning and end of the year) and higher in summer (especially July/August). The SBSP site's average air temperature is consistently lower than the SASP site.
+
+Bonus: Make a plot of average daily precipitation by day of year (averaged across all available years). Color each site. 
+```{r assign3 bonus1}
+# prep data and find means
+dailyprecip <- forcing_data_full %>%
+  group_by(month, day) %>%
+  summarize(
+    meandailyprecip = mean(`precip [kg m-2 s-1]`)) 
+
+# here I tried to create a month/day combo column to be able to plot by
+dailyprecip_dates <- dailyprecip %>%
+  unite("DM", day:month, remove = FALSE)
+
+# plot
+ggplot(dailyprecip_dates, aes(x=DM, y=meandailyprecip)) + geom_point()
+
+```
+
+
+Bonus #2: Use a function and for loop to create yearly plots of precipitation by day of year. Color each site. 
+```{r assign3 bonus2a}
+# edit data to have a date column
+forcing_data_full$Date <- as.Date(with(forcing_data_full,paste(year,month,day,sep="-")),"%Y-%m-%d")
+```
+
+
+```{r assign3 bonus2b}
+# write a function to plot
+precipplotter <- function(df,year){
+  precip_days <- df %>%
+    group_by(month, day, year, site)%>%
+    filter (yr == year) 
+
+  precipgraph <-
+    ggplot(precip_days, aes(x= Date, y= `precip [kg m-2 s-1]`)) + geom_line() + labs(x = 'Date', y= 'Precip', title = yr)
+  
+  print(precipgraph)
+}
+
+# create a list of years to plot
+years <- c(2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011)
+
+# create a for in loop
+for (yr in years){
+  precipplotter(forcing_data_full, year)
+}
+```
+

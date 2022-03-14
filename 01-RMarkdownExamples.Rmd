@@ -1,0 +1,142 @@
+# Assignment 1: RMarkdown Examples
+
+title: "Discharge Data Example"
+
+date: "Last compiled on `r format(Sys.time(), '%B %d, %Y')`"
+
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+
+
+```{r prep assign1, include=FALSE}
+#Prepare libraries needed
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(dataRetrieval)
+library(dygraphs)
+library(xts)
+```
+
+
+## Methods
+
+The Poudre River at Lincoln Bridge is:
+
+  - Downstream of only a little bit of urban stormwater
+
+  - Near Odell Brewing CO
+  
+  - Near an open space area and the Poudre River Trail
+  
+  - **Downstream of many agricultural diversions**
+
+
+### Site Description
+
+![](https://waterdata.usgs.gov/nwisweb/local/state/co/text/pics/06752260big.jpg)
+
+
+## Data Acquisition and Plotting Tests
+
+### Data Download
+
+
+```{r downloader assign1}
+#Download the Data
+q <- readNWISdv(siteNumbers = '06752260',
+                parameterCd = '00060',
+                startDate = '2017-01-01',
+                endDate = '2022-01-01') %>%
+  rename(q = 'X_00060_00003')
+```
+
+
+
+### Static Data Plotter
+
+
+```{r, warning = FALSE, fig.width = 8, fig.height = 5}
+#Plot the Data with ggplot
+ggplot(q, aes(x = Date, y = q)) + 
+  geom_line() + 
+  ylab('Q (cfs)') + 
+  ggtitle('Discharge in the Poudre River, Fort Collins')
+
+```
+
+
+### Interactive Data Plotter
+
+
+```{r plotter}
+#Plot A Dygraph
+q_xts <- xts(q$q, order.by = q$Date)
+
+
+dygraph(q_xts) %>%
+  dyAxis("y", label = "Discharge (cfs)") 
+```
+
+
+
+## Assignment 
+
+
+This assignment will be primarily about demonstrating some expertice in using
+RMarkdown, since we will be using Rmds as the primary form of homework and 
+assignments. With that in mind, your assignment for this homework is to:
+
+
+### Question 1-3: 
+1: Fork the example repository into your personal GitHub 
+(Completed)
+
+2: Create an RStudio project from your Personal clone of the Repo
+(Completed)
+
+3: Create a table of contents that is floating, but displays three levels of
+headers instead of two (by editing the content at the beginning of the document) 
+(Completed)
+
+### Question 4: 
+Make a version of the `dygraph` with points and lines by using rstudio's
+dygraph [guide](https://rstudio.github.io/dygraphs/) 
+
+```{r ques4 dygraph}
+#Plot A Dygraph
+dygraph(q_xts) %>% 
+  dyOptions(drawPoints = TRUE, pointSize = 2) %>%
+  dyAxis("y", label = "Discharge (cfs)") 
+```
+
+### Question 5: 
+Writing a paragraph on the Poudre river with at least three hyperlinks,
+**two bolded sections**, and one *italicized phrase*. The content of this paragraph
+is not vital, but try to at least make it true and interesting, and, of course,
+don't plagiarize. 
+
+**The Poudre Itself**
+
+The Cache la Poudre River, also known as *The Poudre*, is a river beloved by Fort Collins residents. Beginning in Rocky Mountain National Park, and ending when it merges with the South Platte River near Greeley, CO, the Poudre spans 76 miles. From start to finish, the Poudre has about a 7,000 feet elevation change. 
+
+**The Poudre & Recreation**
+
+The Poudre river provides Northern Colorado with lots of different types of recreation, including whitewater rafting, fishing, and floating within it. For whitewater rafting, the Poudre brings multiple options for different ability levels. From easy Class I rapids to a Class V waterfall rapid, you can pick and choose from multiple different trips to tailor the experience to your comfort and ability. For more information or to book a trip, check out [this rafting site](https://www.coloradorafting.net/river-trips/poudre-river/#filter/41). If white water rafting isn't your thing, you may enjoy fly fishing. The poudre has a ton of fish, and is well known for its trout-rich waters. So no matter where along the river you decide to stop and drop a line, you'll find fish, but [this guide](https://hikingandfishing.com/fly-fishing-cache-la-poudre-river-co/) has a thorough map with locations, and information about rules and regulations. 
+If being in the water doesn't float your boat, there are many ways to enjoy the Poudre while staying dry, such as hiking, hammocking, biking, and walking along it. The Poudre has carved a beautiful canyon overtime, with many "gulches". These gulches are particularly beautiful and make for great hikes. Once you've done a hike and you need a break, the Poudre also has numerous [picnic spots](https://www.fs.usda.gov/recarea/arp/recreation/picnickinginfo/recarea/?recid=36717&actid=70) along it that make for great hammocking. 
+Whether you embark on a great adventure along the Poudre, or just head up the canyon for a relaxing drive, you'll have a good day.
+
+### Question 6-9:
+6: Knit that document, and then git commit and push to your personal GitHub. (Completed)
+
+7: Use the GitHub -> Settings -> Pages tab to create a website of your report. (Completed)
+
+8: Bonus, make the timestamp in the header dynamic. As in it only adds
+todays date, not just a static date you enter. (Completed)
+
+9: Bonus, create an "index_talk.Rmd" version of your document using the
+`revealjs` package. Add link to your original report-style document. (Completed)
+  

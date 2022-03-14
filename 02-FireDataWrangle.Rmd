@@ -1,0 +1,193 @@
+# Assignment 2: Fire Data Wrangle
+
+title: "Hayman Fire Recovery"
+author: "Samantha Clark"
+date: "10/3/2019"
+output:
+  html_document: default
+  pdf_document: default
+
+
+```{r setup assign2, warning=F,message=F}
+# Prepare Libraries Needed
+library(tidyverse)
+library(tidyr)
+library(ggthemes)
+library(lubridate)
+library(knitr)
+
+# Now that we have learned how to munge (manipulate) data
+# and plot it, we will work on using these skills in new ways
+
+knitr::opts_knit$set(root.dir='.')
+```
+
+
+```{r dataread assign2, warning=F,message=F}
+####-----Reading in Data and Stacking it ----- ####
+#Reading in files
+files <- list.files('./data',full.names=T)
+
+
+#Read in individual data files
+ndmi <- read_csv(files[1]) %>% 
+  rename(burned=2,unburned=3) %>%
+  mutate(data='ndmi')
+
+
+ndsi <- read_csv(files[2]) %>% 
+  rename(burned=2,unburned=3) %>%
+  mutate(data='ndsi')
+
+ndvi <- read_csv(files[3])%>% 
+  rename(burned=2,unburned=3) %>%
+  mutate(data='ndvi')
+
+# Stack as a tidy dataset
+full_long <- rbind(ndvi,ndmi,ndsi) %>%
+  gather(key='site',value='value',-DateTime,-data) %>%
+  filter(!is.na(value))
+
+
+```
+
+
+
+
+## Question 1
+
+What is the correlation between NDVI and NDMI? - here I want you to convert the full_long dataset in to a wide dataset using the function "spread" and then make a plot that shows the correlation as a function of if the site was burned or not (x axis should be ndmi)
+You should exclude winter months and focus on summer months
+
+```{r assign1 ques1}
+# Convert data from long format to wide format
+full_wide <- pivot_wider(full_long, names_from = "data", values_from = "value")
+
+# Select months and plot NDVI vs NDMI
+full_wide %>%
+  mutate(month=month(DateTime), year=year(DateTime)) %>%
+  filter(!month %in% c(9,10,11,12,1,2,3,4,5)) %>%
+  ggplot(aes(x=ndmi, y=ndvi,color=site)) +geom_point() +geom_smooth() + ggtitle('Figure 1: NDVI vs NDMI') +xlab('NDMI') + ylab('NDVI')
+```
+
+
+Overall NDMI and NDVI are positively correlated, so as moisture increases, so does vegetation. However, at a certain point, when moisture becomes too high, vegetation no longer increases and either plateaus or decreases. This is understandable for instances of snow, or if vegetation has a very specific range of moisture in which it thrives. If the NDMI is above the vegetation's upper moisture limit, the vegetation may begin to suffer, and therefore NDVI would decrease. 
+There is also a difference between the trend for the unburned site and the burned site. Overall, vegetation is lower for the burned site no matter the moisture level. This makes sense as the burned site has fire damage, which will impact the vegetation for years after the fire. Overall, both of the trends are positively correlated to about the same point. 
+
+
+
+## Question 2 
+
+What is the correlation between average NDSI (normalized
+ snow index) for January - April and average NDVI for June-August?
+In other words, does the previous year's snow cover influence vegetation growth for the following summer?
+
+```{r ques2 assign2}
+# Convert NDVI dataset
+ndvi_long <- pivot_longer(ndvi, cols = c(burned, unburned), names_to = "site", values_to = "value") %>%
+  filter(!is.na(value)) %>%
+  transform(value = as.numeric(value))
+
+#find averages for each year, for June- August
+NDVI_avgs <- ndvi_long %>%
+  mutate(month=month(DateTime), year=year(DateTime)) %>%
+  filter(month %in% c(6,7,8)) %>%
+  group_by(year, data) %>%
+  summarize(mean = mean(value))
+
+# Convert NDSI dataset
+ndsi_long <- pivot_longer(ndsi, cols = c(burned, unburned), names_to = "site", values_to = "value") %>%
+  filter(!is.na(value)) %>%
+  transform(value = as.numeric(value))
+
+#find averages for each year, for January-April
+NDSI_avgs <- ndsi_long %>%
+  mutate(month=month(DateTime), year=year(DateTime)) %>%
+  filter(month %in% c(1,2,3,4)) %>%
+  group_by(year, data) %>%
+  summarize(mean = mean(value))
+
+#merge datasets
+finaldf = rbind(NDSI_avgs, NDVI_avgs)
+
+#plot
+ggplot(finaldf) +aes(x=year, y=mean, color=data) +geom_point() +geom_line() + ggtitle('Figure 2: Snow Effect on Vegetation') +xlab('Year') +ylab('Mean')
+```
+
+It appears that there is not a trend between snow fall in January-April and vegetation in June-August. The range in snow index does not have a large effect on vegetation index. For example, the large drop in average snow index in 1988 does not have an impact on the vegetation. This is an interesting lack of relationship, as I would expect the amount of snow to have a large impact on the greenness for the upcoming season. 
+
+## Question 3
+
+How is the snow effect from question 2 different between pre- and post-burn and burned and unburned? 
+
+```{r ques3 assign2}
+
+#find averages for each year, for January-April
+NDSI_avgs2 <- ndsi_long %>%
+  mutate(month=month(DateTime), year=year(DateTime)) %>%
+  filter(month %in% c(1,2,3,4)) %>%
+  group_by(year, data, site) %>%
+  summarize(mean = mean(value))
+
+#find averages for each year, for June- August
+NDVI_avgs2 <- ndvi_long %>%
+  mutate(month=month(DateTime), year=year(DateTime)) %>%
+  filter(month %in% c(6,7,8)) %>%
+  group_by(year, data, site) %>%
+  summarize(mean = mean(value))
+
+#merge datasets
+finaldf2 = rbind(NDSI_avgs2, NDVI_avgs2)
+
+#plot
+ggplot(finaldf2) +aes(x=year, y=mean, color=data, shape = site) +geom_point() +geom_line() + ggtitle('Figure 3: Snow Effect on Vegetation At Two Sites Before and After 2003 Fire') +xlab('Year') +ylab('Mean')
+```
+
+The fire occurred in 2003, and before the fire there is not a large difference between the NDVI for the (future) burned vs unburned areas. After the fire, there is a large difference between NDVI for burned vs unburned, which is to be expected as fires can impact vegetation for decades after the fire actually happens. Post-burn, it appears that NDSI has a larger impact on NDVI than pre-burn. This would make sense, as vegetation is likely more succeptible to its surroundings and less able to adapt. 
+
+## Question 4
+
+What month is the greenest month on average? 
+
+
+```{r ques4 assign2}
+#create month column
+monthndvi <- ndvi_long %>%
+  mutate(month=month(DateTime))
+
+#find means by month
+monthlymeans_NDVI <- monthndvi %>%
+  group_by(month) %>%
+  summarize(mean = mean(value))
+
+#create a table
+kable(monthlymeans_NDVI, caption = 'NDVI Averages by Month')
+```
+
+
+NDVI is the normalized difference vegetation index, and determines the density of green on land. As such, I can find the average NDVI of different months and determine which month, on average, is the greenest. The averages range from 0.1986 (February) to 0.3871 (August). In other words, August was the greenest month on average. The second greenest was September at 0.3827. The least greenest month was February at 0.1986. 
+
+
+## Question 5 
+
+What month is the snowiest on average?
+
+```{r ques5 assign2}
+#create a month column
+monthndsi <- ndsi_long %>%
+  mutate(month=month(DateTime))
+
+#find means by month
+monthlymeans_NDSI <- monthndsi %>%
+  group_by(month) %>%
+  summarize(mean = mean(value))
+
+#create a table
+kable(monthlymeans_NDSI, caption = 'NDSI Averages by Month')
+```
+
+NDSI is the normalized difference snow index, and detects the presence of snow on land. As such, I can find the average NDSI of different months and determine which month, on average, is the snowiest The averages range from -0.4594 (August) to 0.2099 (January). In other words, January was the snowiest month on average. The second snowiest was February at 0.1988. The least snowiest month was August at -0.4594. 
+
+
+## Bonus Question: Redo all problems with `spread` and `gather` using modern tidyverse syntax.(Completed)
+
