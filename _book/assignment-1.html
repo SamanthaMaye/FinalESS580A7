@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Assignment: | ESS 580A7 Final</title>
+  <meta name="description" content="8 Assignment: | ESS 580A7 Final Bookdown" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Assignment: | ESS 580A7 Final" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="8 Assignment: | ESS 580A7 Final Bookdown" />
+  <meta name="github-repo" content="rstudio/finalbookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Assignment: | ESS 580A7 Final" />
+  
+  <meta name="twitter:description" content="8 Assignment: | ESS 580A7 Final Bookdown" />
+  
+
+<meta name="author" content="Samantha Clark" />
+
+
+<meta name="date" content="2022-03-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="simple-web-scraping.html"/>
+<link rel="next" href="assignment-4-lagos-spatial-analyses-1.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.0/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html"><i class="fa fa-check"></i><b>2</b> Assignment 1: RMarkdown Examples</a></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="methods.html"><a href="methods.html#site-description"><i class="fa fa-check"></i><b>3.1</b> Site Description</a></li>
+<li class="chapter" data-level="3.2" data-path="methods.html"><a href="methods.html#data-acquisition-and-plotting-tests"><i class="fa fa-check"></i><b>3.2</b> Data Acquisition and Plotting Tests</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="methods.html"><a href="methods.html#data-download"><i class="fa fa-check"></i><b>3.2.1</b> Data Download</a></li>
+<li class="chapter" data-level="3.2.2" data-path="methods.html"><a href="methods.html#static-data-plotter"><i class="fa fa-check"></i><b>3.2.2</b> Static Data Plotter</a></li>
+<li class="chapter" data-level="3.2.3" data-path="methods.html"><a href="methods.html#interactive-data-plotter"><i class="fa fa-check"></i><b>3.2.3</b> Interactive Data Plotter</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="assignment.html"><a href="assignment.html"><i class="fa fa-check"></i><b>4</b> Assignment</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="assignment.html"><a href="assignment.html#question-1-3"><i class="fa fa-check"></i><b>4.1</b> Question 1-3:</a></li>
+<li class="chapter" data-level="4.2" data-path="assignment.html"><a href="assignment.html#question-4"><i class="fa fa-check"></i><b>4.2</b> Question 4:</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="assignment.html"><a href="assignment.html#question-4-dygraph"><i class="fa fa-check"></i><b>4.2.1</b> Question 4 DyGraph</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="assignment.html"><a href="assignment.html#question-5"><i class="fa fa-check"></i><b>4.3</b> Question 5:</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="assignment.html"><a href="assignment.html#poudre-paragraph"><i class="fa fa-check"></i><b>4.3.1</b> Poudre Paragraph</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="assignment.html"><a href="assignment.html#question-6-9"><i class="fa fa-check"></i><b>4.4</b> Question 6-9:</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html"><i class="fa fa-check"></i><b>5</b> Assignment 2: Fire Data Wrangle</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-1"><i class="fa fa-check"></i><b>5.1</b> Question 1</a></li>
+<li class="chapter" data-level="5.2" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-2"><i class="fa fa-check"></i><b>5.2</b> Question 2</a></li>
+<li class="chapter" data-level="5.3" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-3"><i class="fa fa-check"></i><b>5.3</b> Question 3</a></li>
+<li class="chapter" data-level="5.4" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-4-1"><i class="fa fa-check"></i><b>5.4</b> Question 4</a></li>
+<li class="chapter" data-level="5.5" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-5-1"><i class="fa fa-check"></i><b>5.5</b> Question 5</a></li>
+<li class="chapter" data-level="5.6" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#bonus-question-redo-all-problems-with-spread-and-gather-using-modern-tidyverse-syntax."><i class="fa fa-check"></i><b>5.6</b> Bonus Question: Redo all problems with <code>spread</code> and <code>gather</code> using modern tidyverse syntax.</a></li>
+<li class="chapter" data-level="5.7" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#bonus-question-use-climate-engine-to-pull-the-same-data-for-the-assignment-but-updated-with-20202021-data."><i class="fa fa-check"></i><b>5.7</b> Bonus Question: Use Climate Engine to pull the same data for the assignment, but updated with 2020/2021 data.</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="assignment-3-snow-functions-iteration.html"><a href="assignment-3-snow-functions-iteration.html"><i class="fa fa-check"></i><b>6</b> Assignment 3: Snow Functions Iteration</a></li>
+<li class="chapter" data-level="7" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html"><i class="fa fa-check"></i><b>7</b> Simple web scraping</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html#reading-an-html"><i class="fa fa-check"></i><b>7.1</b> Reading an html</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html#extract-csv-links-from-webpage"><i class="fa fa-check"></i><b>7.1.1</b> Extract CSV links from webpage</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html#data-download-1"><i class="fa fa-check"></i><b>7.2</b> Data Download</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html#download-data-in-a-for-loop"><i class="fa fa-check"></i><b>7.2.1</b> Download data in a for loop</a></li>
+<li class="chapter" data-level="7.2.2" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html#download-data-in-a-map"><i class="fa fa-check"></i><b>7.2.2</b> Download data in a map</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html#data-read-in"><i class="fa fa-check"></i><b>7.3</b> Data read-in</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html#read-in-just-the-snow-data-as-a-loop"><i class="fa fa-check"></i><b>7.3.1</b> Read in just the snow data as a loop</a></li>
+<li class="chapter" data-level="7.3.2" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html#read-in-the-data-as-a-map-function"><i class="fa fa-check"></i><b>7.3.2</b> Read in the data as a map function</a></li>
+<li class="chapter" data-level="7.3.3" data-path="simple-web-scraping.html"><a href="simple-web-scraping.html#plot-snow-data"><i class="fa fa-check"></i><b>7.3.3</b> Plot snow data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="assignment-1.html"><a href="assignment-1.html"><i class="fa fa-check"></i><b>8</b> Assignment:</a></li>
+<li class="chapter" data-level="9" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html"><i class="fa fa-check"></i><b>9</b> Assignment 4: LAGOS Spatial Analyses 1</a></li>
+<li class="chapter" data-level="10" data-path="lagos-analysis.html"><a href="lagos-analysis.html"><i class="fa fa-check"></i><b>10</b> LAGOS Analysis</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="lagos-analysis.html"><a href="lagos-analysis.html#loading-in-data"><i class="fa fa-check"></i><b>10.1</b> Loading in data</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="lagos-analysis.html"><a href="lagos-analysis.html#first-download-and-then-specifically-grab-the-locus-or-site-lat-longs"><i class="fa fa-check"></i><b>10.1.1</b> First download and then specifically grab the locus (or site lat longs)</a></li>
+<li class="chapter" data-level="10.1.2" data-path="lagos-analysis.html"><a href="lagos-analysis.html#convert-to-spatial-data"><i class="fa fa-check"></i><b>10.1.2</b> Convert to spatial data</a></li>
+<li class="chapter" data-level="10.1.3" data-path="lagos-analysis.html"><a href="lagos-analysis.html#subset-to-only-minnesota"><i class="fa fa-check"></i><b>10.1.3</b> Subset to only Minnesota</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="in-class-work.html"><a href="in-class-work.html"><i class="fa fa-check"></i><b>11</b> In-Class work</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="in-class-work.html"><a href="in-class-work.html#show-a-map-outline-of-iowa-and-illinois-similar-to-minnesota-map-upstream"><i class="fa fa-check"></i><b>11.1</b> 1) Show a map outline of Iowa and Illinois (similar to Minnesota map upstream)</a></li>
+<li class="chapter" data-level="11.2" data-path="in-class-work.html"><a href="in-class-work.html#subset-lagos-data-to-these-sites-how-many-sites-are-in-illinois-and-iowa-combined-how-does-this-compare-to-minnesota"><i class="fa fa-check"></i><b>11.2</b> 2) Subset LAGOS data to these sites, how many sites are in Illinois and Iowa combined? How does this compare to Minnesota?</a></li>
+<li class="chapter" data-level="11.3" data-path="in-class-work.html"><a href="in-class-work.html#what-is-the-distribution-of-lake-size-in-iowa-vs.-minnesota"><i class="fa fa-check"></i><b>11.3</b> 3) What is the distribution of lake size in Iowa vs. Minnesota?</a></li>
+<li class="chapter" data-level="11.4" data-path="in-class-work.html"><a href="in-class-work.html#make-an-interactive-plot-of-lakes-in-iowa-and-illinois-and-color-them-by-lake-area-in-hectares"><i class="fa fa-check"></i><b>11.4</b> 4) Make an interactive plot of lakes in Iowa and Illinois and color them by lake area in hectares</a></li>
+<li class="chapter" data-level="11.5" data-path="in-class-work.html"><a href="in-class-work.html#what-other-data-sources-might-we-use-to-understand-how-reservoirs-and-natural-lakes-vary-in-size-in-these-three-states"><i class="fa fa-check"></i><b>11.5</b> 5) What other data sources might we use to understand how reservoirs and natural lakes vary in size in these three states?</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="assignment-5-lagos-spatial-analyses-2.html"><a href="assignment-5-lagos-spatial-analyses-2.html"><i class="fa fa-check"></i><b>12</b> Assignment 5: LAGOS Spatial Analyses 2</a></li>
+<li class="chapter" data-level="13" data-path="lagos-analysis-1.html"><a href="lagos-analysis-1.html"><i class="fa fa-check"></i><b>13</b> LAGOS Analysis</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="lagos-analysis-1.html"><a href="lagos-analysis-1.html#loading-in-data-1"><i class="fa fa-check"></i><b>13.1</b> Loading in data</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="lagos-analysis-1.html"><a href="lagos-analysis-1.html#first-download-and-then-specifically-grab-the-locus-or-site-lat-longs-1"><i class="fa fa-check"></i><b>13.1.1</b> First download and then specifically grab the locus (or site lat longs)</a></li>
+<li class="chapter" data-level="13.1.2" data-path="lagos-analysis-1.html"><a href="lagos-analysis-1.html#subset-columns-nutr-to-only-keep-key-info-that-we-want"><i class="fa fa-check"></i><b>13.1.2</b> Subset columns nutr to only keep key info that we want</a></li>
+<li class="chapter" data-level="13.1.3" data-path="lagos-analysis-1.html"><a href="lagos-analysis-1.html#keep-sites-with-at-least-200-observations"><i class="fa fa-check"></i><b>13.1.3</b> Keep sites with at least 200 observations</a></li>
+<li class="chapter" data-level="13.1.4" data-path="lagos-analysis-1.html"><a href="lagos-analysis-1.html#join-water-quality-data-to-spatial-data"><i class="fa fa-check"></i><b>13.1.4</b> Join water quality data to spatial data</a></li>
+<li class="chapter" data-level="13.1.5" data-path="lagos-analysis-1.html"><a href="lagos-analysis-1.html#mean-chl_a-map"><i class="fa fa-check"></i><b>13.1.5</b> Mean Chl_a map</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="class-work.html"><a href="class-work.html"><i class="fa fa-check"></i><b>14</b> Class work</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="class-work.html"><a href="class-work.html#what-is-the-correlation-between-secchi-disk-depth-and-chlorophyll-a-for-sites-with-at-least-200-observations"><i class="fa fa-check"></i><b>14.1</b> 1) What is the correlation between Secchi Disk Depth and Chlorophyll a for sites with at least 200 observations?</a></li>
+<li class="chapter" data-level="14.2" data-path="class-work.html"><a href="class-work.html#why-might-this-be-the-case"><i class="fa fa-check"></i><b>14.2</b> Why might this be the case?</a></li>
+<li class="chapter" data-level="14.3" data-path="class-work.html"><a href="class-work.html#what-states-have-the-most-data"><i class="fa fa-check"></i><b>14.3</b> 2) What states have the most data?</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="class-work.html"><a href="class-work.html#a-first-you-will-need-to-make-a-lagos-spatial-dataset-that-has-the-total-number-of-counts-per-site."><i class="fa fa-check"></i><b>14.3.1</b> 2a) First you will need to make a lagos spatial dataset that has the total number of counts per site.</a></li>
+<li class="chapter" data-level="14.3.2" data-path="class-work.html"><a href="class-work.html#b-second-you-will-need-to-join-this-point-dataset-to-the-us_boundaries-data."><i class="fa fa-check"></i><b>14.3.2</b> 2b) Second, you will need to join this point dataset to the us_boundaries data.</a></li>
+<li class="chapter" data-level="14.3.3" data-path="class-work.html"><a href="class-work.html#c-then-you-will-want-to-group-by-state-and-sum-all-the-observations-in-that-state-and-arrange-that-data-from-most-to-least-toatl-observations-per-state."><i class="fa fa-check"></i><b>14.3.3</b> 2c) Then you will want to group by state and sum all the observations in that state and arrange that data from most to least toatl observations per state.</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html"><i class="fa fa-check"></i><b>15</b> Assignment 6: Weather Corn Regressions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#weather-data-analysis"><i class="fa fa-check"></i><b>15.1</b> Weather Data Analysis</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#load-the-prism-daily-maximum-temperatures"><i class="fa fa-check"></i><b>15.1.1</b> Load the PRISM daily maximum temperatures</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#temperature-trends"><i class="fa fa-check"></i><b>15.2</b> Temperature trends</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#summer-temperature-trends-winneshiek-county"><i class="fa fa-check"></i><b>15.2.1</b> Summer temperature trends: Winneshiek County</a></li>
+<li class="chapter" data-level="15.2.2" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#winter-temperatures---winneshiek-county"><i class="fa fa-check"></i><b>15.2.2</b> Winter Temperatures - Winneshiek County</a></li>
+<li class="chapter" data-level="15.2.3" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#multiple-regression-quadratic-time-trend"><i class="fa fa-check"></i><b>15.2.3</b> Multiple regression – Quadratic time trend</a></li>
+<li class="chapter" data-level="15.2.4" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#download-nass-corn-yield-data"><i class="fa fa-check"></i><b>15.2.4</b> Download NASS corn yield data</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#assignment-2"><i class="fa fa-check"></i><b>15.3</b> Assignment</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-1a-extract-winneshiek-county-corn-yields-fit-a-linear-time-trend-make-a-plot.-is-there-a-significant-time-trend"><i class="fa fa-check"></i><b>15.3.1</b> Question 1a: Extract Winneshiek County corn yields, fit a linear time trend, make a plot. Is there a significant time trend?</a></li>
+<li class="chapter" data-level="15.3.2" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-1b-fit-a-quadratic-time-trend-i.e.-year-year2-and-make-a-plot.-is-there-evidence-for-slowing-yield-growth"><i class="fa fa-check"></i><b>15.3.2</b> Question 1b: Fit a quadratic time trend (i.e., year + year^2) and make a plot. Is there evidence for slowing yield growth?</a></li>
+<li class="chapter" data-level="15.3.3" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-2-time-series-lets-analyze-the-relationship-between-temperature-and-yields-for-the-winneshiek-county-time-series.-use-data-on-yield-and-summer-avg-tmax.-is-adding-year-or-tmax2-to-your-model-helpful-make-a-plot-and-interpret-the-results."><i class="fa fa-check"></i><b>15.3.3</b> Question 2 – Time Series: Let’s analyze the relationship between temperature and yields for the Winneshiek County time series. Use data on yield and summer avg Tmax. Is adding year or Tmax^2 to your model helpful? Make a plot and interpret the results.</a></li>
+<li class="chapter" data-level="15.3.4" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-3-cross-section-analyze-the-relationship-between-temperature-and-yield-across-all-counties-in-2018.-is-there-a-relationship-interpret-the-results."><i class="fa fa-check"></i><b>15.3.4</b> Question 3 – Cross-Section: Analyze the relationship between temperature and yield across all counties in 2018. Is there a relationship? Interpret the results.</a></li>
+<li class="chapter" data-level="15.3.5" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-4-panel-one-way-to-leverage-multiple-time-series-is-to-group-all-data-into-what-is-called-a-panel-regression.-convert-the-county-id-code-countyfp-or-county_ansi-into-factor-using-as.factor-then-include-this-variable-in-a-regression-using-all-counties-yield-and-summer-temperature-data.-how-does-the-significance-of-your-temperature-coefficients-tmax-tmax2-change-make-a-plot-comparing-actual-and-fitted-yields-and-interpret-the-results-of-your-model."><i class="fa fa-check"></i><b>15.3.5</b> Question 4 – Panel: One way to leverage multiple time series is to group all data into what is called a “panel” regression. Convert the county ID code (“countyfp” or “county_ansi”) into factor using as.factor, then include this variable in a regression using all counties’ yield and summer temperature data. How does the significance of your temperature coefficients (Tmax, Tmax^2) change? Make a plot comparing actual and fitted yields and interpret the results of your model.</a></li>
+<li class="chapter" data-level="15.3.6" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-5-soybeans-download-nass-data-on-soybean-yields-and-explore-either-a-time-series-relationship-for-a-given-county-the-cross-sectional-relationship-for-a-given-year-or-a-panel-across-all-counties-and-years."><i class="fa fa-check"></i><b>15.3.6</b> Question 5 – Soybeans: Download NASS data on soybean yields and explore either a time series relationship for a given county, the cross-sectional relationship for a given year, or a panel across all counties and years.</a></li>
+<li class="chapter" data-level="15.3.7" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#bonus-find-a-package-to-make-a-county-map-of-iowa-displaying-some-sort-of-information-about-yields-or-weather.-interpret-your-map."><i class="fa fa-check"></i><b>15.3.7</b> Bonus: Find a package to make a county map of Iowa displaying some sort of information about yields or weather. Interpret your map.</a></li>
+<li class="chapter" data-level="15.3.8" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#bonus-2-challenge-question---map-trends-in-corn-yields-by-county-across-iowa.-interpret-your-map."><i class="fa fa-check"></i><b>15.3.8</b> Bonus #2: Challenge question - map trends in corn yields by county across Iowa. Interpret your map.</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ESS 580A7 Final</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="assignment-1" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Assignment:</h1>
+<ol style="list-style-type: decimal">
+<li>Extract the meteorological data URLs. Here we want you to use the <code>rvest</code> package to get the URLs for the <code>SASP forcing</code> and <code>SBSP_forcing</code> meteorological datasets.</li>
+</ol>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="assignment-1.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb41-2"><a href="assignment-1.html#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="assignment-1.html#cb41-3" aria-hidden="true" tabindex="-1"></a>site_url1 <span class="ot">&lt;-</span> <span class="st">&#39;https://snowstudies.org/archived-data/&#39;</span></span>
+<span id="cb41-4"><a href="assignment-1.html#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="assignment-1.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Read the web url</span></span>
+<span id="cb41-6"><a href="assignment-1.html#cb41-6" aria-hidden="true" tabindex="-1"></a>webpage1 <span class="ot">&lt;-</span> <span class="fu">read_html</span>(site_url1)</span>
+<span id="cb41-7"><a href="assignment-1.html#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="assignment-1.html#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co">#extract weblinks and urls</span></span>
+<span id="cb41-9"><a href="assignment-1.html#cb41-9" aria-hidden="true" tabindex="-1"></a>hwlinks <span class="ot">&lt;-</span> webpage1 <span class="sc">%&gt;%</span></span>
+<span id="cb41-10"><a href="assignment-1.html#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&#39;a&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-11"><a href="assignment-1.html#cb41-11" aria-hidden="true" tabindex="-1"></a>  .[<span class="fu">grepl</span>(<span class="st">&#39;forcing&#39;</span>,.)] <span class="sc">%&gt;%</span></span>
+<span id="cb41-12"><a href="assignment-1.html#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">&#39;href&#39;</span>)</span>
+<span id="cb41-13"><a href="assignment-1.html#cb41-13" aria-hidden="true" tabindex="-1"></a>hwlinks</span></code></pre></div>
+<pre><code>## [1] &quot;https://snowstudies.org/wp-content/uploads/2022/02/SBB_SASP_Forcing_Data.txt&quot;
+## [2] &quot;https://snowstudies.org/wp-content/uploads/2022/02/SBB_SBSP_Forcing_Data.txt&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Download the meteorological data. Use the <code>download_file</code> and <code>str_split_fixed</code> commands to download the data and save it in your data folder. You can use a for loop or a map function.</li>
+</ol>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="assignment-1.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Download data</span></span>
+<span id="cb43-2"><a href="assignment-1.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="assignment-1.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Grab only the name of the file by splitting out on forward slashes</span></span>
+<span id="cb43-4"><a href="assignment-1.html#cb43-4" aria-hidden="true" tabindex="-1"></a>hwsplit <span class="ot">&lt;-</span> <span class="fu">str_split_fixed</span>(hwlinks,<span class="st">&#39;/&#39;</span>,<span class="dv">8</span>)</span>
+<span id="cb43-5"><a href="assignment-1.html#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="assignment-1.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Keep only the 7th column</span></span>
+<span id="cb43-7"><a href="assignment-1.html#cb43-7" aria-hidden="true" tabindex="-1"></a>hwdataset <span class="ot">&lt;-</span> hwsplit[,<span class="dv">8</span>] </span>
+<span id="cb43-8"><a href="assignment-1.html#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="assignment-1.html#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="co">#generate a file list for where the data goes</span></span>
+<span id="cb43-10"><a href="assignment-1.html#cb43-10" aria-hidden="true" tabindex="-1"></a>hwfilenames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&#39;data/&#39;</span>,hwdataset)</span>
+<span id="cb43-11"><a href="assignment-1.html#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-12"><a href="assignment-1.html#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>){</span>
+<span id="cb43-13"><a href="assignment-1.html#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(hwlinks[i],<span class="at">destfile=</span>hwfilenames[i])</span>
+<span id="cb43-14"><a href="assignment-1.html#cb43-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-15"><a href="assignment-1.html#cb43-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-16"><a href="assignment-1.html#cb43-16" aria-hidden="true" tabindex="-1"></a>hwdownloaded <span class="ot">&lt;-</span> <span class="fu">file.exists</span>(hwfilenames)</span>
+<span id="cb43-17"><a href="assignment-1.html#cb43-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-18"><a href="assignment-1.html#cb43-18" aria-hidden="true" tabindex="-1"></a>hwevaluate <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">all</span>(hwdownloaded)</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Write a custom function to read in the data and append a site column to the data.</li>
+</ol>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="assignment-1.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Grab the variable names from the pdf</span></span>
+<span id="cb44-2"><a href="assignment-1.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdftools)</span></code></pre></div>
+<pre><code>## Using poppler version 20.12.1</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="assignment-1.html#cb46-1" aria-hidden="true" tabindex="-1"></a>headers <span class="ot">&lt;-</span> <span class="fu">pdf_text</span>(<span class="st">&#39;https://snowstudies.org/wp-content/uploads/2022/02/Serially-Complete-Metadata-text08.pdf&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="assignment-1.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_lines</span>(.) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="assignment-1.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trimws</span>(.) <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="assignment-1.html#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_split_fixed</span>(.,<span class="st">&#39;</span><span class="sc">\\</span><span class="st">.&#39;</span>,<span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-5"><a href="assignment-1.html#cb46-5" aria-hidden="true" tabindex="-1"></a>  .[,<span class="dv">2</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb46-6"><a href="assignment-1.html#cb46-6" aria-hidden="true" tabindex="-1"></a>  .[<span class="dv">1</span><span class="sc">:</span><span class="dv">26</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb46-7"><a href="assignment-1.html#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_trim</span>(<span class="at">side =</span> <span class="st">&quot;left&quot;</span>) </span>
+<span id="cb46-8"><a href="assignment-1.html#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="assignment-1.html#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Read in data</span></span>
+<span id="cb46-10"><a href="assignment-1.html#cb46-10" aria-hidden="true" tabindex="-1"></a>forcing_reader <span class="ot">&lt;-</span> <span class="cf">function</span>(hwfilenames){</span>
+<span id="cb46-11"><a href="assignment-1.html#cb46-11" aria-hidden="true" tabindex="-1"></a>  hwdf <span class="ot">&lt;-</span> <span class="fu">read_fwf</span>(hwfilenames)</span>
+<span id="cb46-12"><a href="assignment-1.html#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(hwdf) <span class="ot">=</span> headers[<span class="dv">1</span><span class="sc">:</span><span class="dv">26</span>]</span>
+<span id="cb46-13"><a href="assignment-1.html#cb46-13" aria-hidden="true" tabindex="-1"></a>  hdr1 <span class="ot">=</span> <span class="fu">str_split_fixed</span>(hwfilenames,<span class="st">&#39;_&#39;</span>, <span class="dv">3</span>)[, <span class="dv">2</span>]</span>
+<span id="cb46-14"><a href="assignment-1.html#cb46-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(hwdf, <span class="at">site=</span>hdr1)</span>
+<span id="cb46-15"><a href="assignment-1.html#cb46-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-16"><a href="assignment-1.html#cb46-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>Use the <code>map</code> function to read in both meteorological files. Display a summary of your tibble.</li>
+</ol>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="assignment-1.html#cb47-1" aria-hidden="true" tabindex="-1"></a>forcing_data_full <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(hwfilenames,forcing_reader)</span></code></pre></div>
+<pre><code>## Rows: 69168 Columns: 19</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## 
+## chr  (2): X12, X14
+## dbl (17): X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X13, X15, X16, X17, ...</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## Warning: The `value` argument of `names&lt;-` must have the same length as `x` as of tibble 3.0.0.
+## `names` must have length 19, not 26.</code></pre>
+<pre><code>## Rows: 69168 Columns: 19</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## 
+## chr  (2): X12, X14
+## dbl (17): X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X13, X15, X16, X17, ...</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre><code>## Warning: The `value` argument of `names&lt;-` must have the same length as `x` as of tibble 3.0.0.
+## `names` must have length 19, not 26.</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="assignment-1.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(forcing_data_full)</span></code></pre></div>
+<pre><code>##       year          month             day             hour           minute 
+##  Min.   :2003   Min.   : 1.000   Min.   : 1.00   Min.   : 0.00   Min.   :0  
+##  1st Qu.:2005   1st Qu.: 3.000   1st Qu.: 8.00   1st Qu.: 5.75   1st Qu.:0  
+##  Median :2007   Median : 6.000   Median :16.00   Median :11.50   Median :0  
+##  Mean   :2007   Mean   : 6.472   Mean   :15.76   Mean   :11.50   Mean   :0  
+##  3rd Qu.:2009   3rd Qu.: 9.000   3rd Qu.:23.00   3rd Qu.:17.25   3rd Qu.:0  
+##  Max.   :2011   Max.   :12.000   Max.   :31.00   Max.   :23.00   Max.   :0  
+##      second  precip [kg m-2 s-1] sw down [W m-2]     lw down [W m-2]  
+##  Min.   :0   Min.   :0.000e+00   Min.   :-9999.000   Min.   :-9999.0  
+##  1st Qu.:0   1st Qu.:0.000e+00   1st Qu.:   -3.510   1st Qu.:  173.4  
+##  Median :0   Median :0.000e+00   Median :   -0.344   Median :  231.4  
+##  Mean   :0   Mean   :3.838e-05   Mean   :-1351.008   Mean   :-1325.7  
+##  3rd Qu.:0   3rd Qu.:0.000e+00   3rd Qu.:  294.900   3rd Qu.:  272.2  
+##  Max.   :0   Max.   :6.111e-03   Max.   : 1341.000   Max.   :  365.8  
+##   air temp [K]   windspeed [m s-1]   relative humidity [%] pressure [Pa]  
+##  Min.   :242.1   Min.   :-9999.000   Length:138336         Min.   :63931  
+##  1st Qu.:265.8   1st Qu.:    0.852   Class :character      1st Qu.:63931  
+##  Median :272.6   Median :    1.548   Mode  :character      Median :65397  
+##  Mean   :272.6   Mean   : -790.054                         Mean   :65397  
+##  3rd Qu.:279.7   3rd Qu.:    3.087                         3rd Qu.:66863  
+##  Max.   :295.8   Max.   :  317.300                         Max.   :66863  
+##  specific humidity [g g-1] calculated dewpoint temperature [K]
+##  Length:138336             Min.   :   0.0                     
+##  Class :character          1st Qu.:   0.0                     
+##  Mode  :character          Median :   0.0                     
+##                            Mean   : 387.3                     
+##                            3rd Qu.:   0.0                     
+##                            Max.   :2009.0                     
+##  precip, WMO-corrected [kg m-2 s-1]
+##  Min.   :   0.0                    
+##  1st Qu.:   0.0                    
+##  Median :   0.0                    
+##  Mean   : 466.2                    
+##  3rd Qu.:   0.0                    
+##  Max.   :3002.0                    
+##  air temp, corrected with Kent et al. (1993) [K]
+##  Min.   :   0.000                               
+##  1st Qu.:   0.000                               
+##  Median :   0.000                               
+##  Mean   :   5.754                               
+##  3rd Qu.:   0.000                               
+##  Max.   :5002.000                               
+##  air temp, corrected with Anderson and Baumgartner (1998)[K]
+##  Min.   :   0.0                                             
+##  1st Qu.:   0.0                                             
+##  Median :   0.0                                             
+##  Mean   : 654.3                                             
+##  3rd Qu.:   0.0                                             
+##  Max.   :4009.0                                             
+##  air temp, corrected with Nakamura and Mahrt (2005) [K]     site          
+##  Min.   :   0.0                                         Length:138336     
+##  1st Qu.:   0.0                                         Class :character  
+##  Median :   0.0                                         Mode  :character  
+##  Mean   : 155.4                                                           
+##  3rd Qu.:   0.0                                                           
+##  Max.   :6009.0</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Make a line plot of mean temp by year by site (using the <code>air temp [K]</code> variable). Is there anything suspicious in the plot? Adjust your filtering if needed.</li>
+</ol>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="assignment-1.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prep data, find means</span></span>
+<span id="cb58-2"><a href="assignment-1.html#cb58-2" aria-hidden="true" tabindex="-1"></a>forcing_yearly <span class="ot">&lt;-</span> forcing_data_full <span class="sc">%&gt;%</span></span>
+<span id="cb58-3"><a href="assignment-1.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, site) <span class="sc">%&gt;%</span></span>
+<span id="cb58-4"><a href="assignment-1.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2004</span>, <span class="dv">2005</span>, <span class="dv">2006</span>, <span class="dv">2007</span>, <span class="dv">2008</span>, <span class="dv">2009</span>, <span class="dv">2010</span>, <span class="dv">2011</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb58-5"><a href="assignment-1.html#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb58-6"><a href="assignment-1.html#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">air temp [K]</span><span class="st">`</span>)</span>
+<span id="cb58-7"><a href="assignment-1.html#cb58-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="assignment-1.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb60-2"><a href="assignment-1.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(forcing_yearly, (<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>mean, <span class="at">color=</span>site))) <span class="sc">+</span><span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/assign3%20ques5-1.png" width="672" />
+On average, air temperature has increased over time from 2004 to 2011. The SBSP site’s air temperature is on average, always a few degrees cooler than the SASP site.
+2003 was filtered out due to containing a small amount of data only in winter, leading to a very cold mean, which is not representative.</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Write a function that makes line plots of monthly average temperature at each site for a given year. Use a for loop to make these plots for 2005 to 2010. Are monthly average temperatures at the Senator Beck Study Plot ever warmer than the Snow Angel Study Plot?
+Hint: <a href="https://ggplot2.tidyverse.org/reference/print.ggplot.html" class="uri">https://ggplot2.tidyverse.org/reference/print.ggplot.html</a></li>
+</ol>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="assignment-1.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write a function to plot</span></span>
+<span id="cb61-2"><a href="assignment-1.html#cb61-2" aria-hidden="true" tabindex="-1"></a>lineplotter <span class="ot">&lt;-</span> <span class="cf">function</span>(df,year){</span>
+<span id="cb61-3"><a href="assignment-1.html#cb61-3" aria-hidden="true" tabindex="-1"></a>  temp_month <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb61-4"><a href="assignment-1.html#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(year, month, site) <span class="sc">%&gt;%</span></span>
+<span id="cb61-5"><a href="assignment-1.html#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
+<span id="cb61-6"><a href="assignment-1.html#cb61-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">meantemp =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">air temp [K]</span><span class="st">`</span>, <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span></span>
+<span id="cb61-7"><a href="assignment-1.html#cb61-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span> (yr <span class="sc">==</span> year)</span>
+<span id="cb61-8"><a href="assignment-1.html#cb61-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb61-9"><a href="assignment-1.html#cb61-9" aria-hidden="true" tabindex="-1"></a>  linegraph <span class="ot">&lt;-</span></span>
+<span id="cb61-10"><a href="assignment-1.html#cb61-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(temp_month, <span class="fu">aes</span>(<span class="at">x=</span> month, <span class="at">y=</span> meantemp, <span class="at">color=</span>site)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Month&#39;</span>, <span class="at">y=</span> <span class="st">&#39;Average Air Temperature [K]&#39;</span>, <span class="at">title =</span> yr)</span>
+<span id="cb61-11"><a href="assignment-1.html#cb61-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb61-12"><a href="assignment-1.html#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(linegraph)</span>
+<span id="cb61-13"><a href="assignment-1.html#cb61-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb61-14"><a href="assignment-1.html#cb61-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-15"><a href="assignment-1.html#cb61-15" aria-hidden="true" tabindex="-1"></a><span class="co"># create a list of years to plot</span></span>
+<span id="cb61-16"><a href="assignment-1.html#cb61-16" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2005</span>, <span class="dv">2006</span>, <span class="dv">2007</span>, <span class="dv">2008</span>, <span class="dv">2009</span>, <span class="dv">2010</span>)</span>
+<span id="cb61-17"><a href="assignment-1.html#cb61-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-18"><a href="assignment-1.html#cb61-18" aria-hidden="true" tabindex="-1"></a><span class="co">#create a for loop</span></span>
+<span id="cb61-19"><a href="assignment-1.html#cb61-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (yr <span class="cf">in</span> years){</span>
+<span id="cb61-20"><a href="assignment-1.html#cb61-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lineplotter</span>(forcing_data_full, year)</span>
+<span id="cb61-21"><a href="assignment-1.html#cb61-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.
+## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
+<p><img src="_main_files/figure-html/assign3%20ques6-1.png" width="672" /></p>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
+<p><img src="_main_files/figure-html/assign3%20ques6-2.png" width="672" /></p>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
+<p><img src="_main_files/figure-html/assign3%20ques6-3.png" width="672" /></p>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
+<p><img src="_main_files/figure-html/assign3%20ques6-4.png" width="672" /></p>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
+<p><img src="_main_files/figure-html/assign3%20ques6-5.png" width="672" /><img src="_main_files/figure-html/assign3%20ques6-6.png" width="672" />
+Each year’s average air temperature varies in a similar pattern, starting low in January/February, increasing until peaking around August and then decreasing again through the end of the year. This makes sense, as temperatures are lower in winter (beginning and end of the year) and higher in summer (especially July/August). The SBSP site’s average air temperature is consistently lower than the SASP site.</p>
+<p>Bonus: Make a plot of average daily precipitation by day of year (averaged across all available years). Color each site.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="assignment-1.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prep data and find means</span></span>
+<span id="cb67-2"><a href="assignment-1.html#cb67-2" aria-hidden="true" tabindex="-1"></a>dailyprecip <span class="ot">&lt;-</span> forcing_data_full <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="assignment-1.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month, day) <span class="sc">%&gt;%</span></span>
+<span id="cb67-4"><a href="assignment-1.html#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb67-5"><a href="assignment-1.html#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">meandailyprecip =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">precip [kg m-2 s-1]</span><span class="st">`</span>)) </span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="assignment-1.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here I tried to create a month/day combo column to be able to plot by</span></span>
+<span id="cb69-2"><a href="assignment-1.html#cb69-2" aria-hidden="true" tabindex="-1"></a>dailyprecip_dates <span class="ot">&lt;-</span> dailyprecip <span class="sc">%&gt;%</span></span>
+<span id="cb69-3"><a href="assignment-1.html#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">&quot;DM&quot;</span>, day<span class="sc">:</span>month, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb69-4"><a href="assignment-1.html#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-5"><a href="assignment-1.html#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb69-6"><a href="assignment-1.html#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dailyprecip_dates, <span class="fu">aes</span>(<span class="at">x=</span>DM, <span class="at">y=</span>meandailyprecip)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/assign3%20bonus1-1.png" width="672" /></p>
+<p>Bonus #2: Use a function and for loop to create yearly plots of precipitation by day of year. Color each site.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="assignment-1.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># edit data to have a date column</span></span>
+<span id="cb70-2"><a href="assignment-1.html#cb70-2" aria-hidden="true" tabindex="-1"></a>forcing_data_full<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">with</span>(forcing_data_full,<span class="fu">paste</span>(year,month,day,<span class="at">sep=</span><span class="st">&quot;-&quot;</span>)),<span class="st">&quot;%Y-%m-%d&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="assignment-1.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write a function to plot</span></span>
+<span id="cb71-2"><a href="assignment-1.html#cb71-2" aria-hidden="true" tabindex="-1"></a>precipplotter <span class="ot">&lt;-</span> <span class="cf">function</span>(df,year){</span>
+<span id="cb71-3"><a href="assignment-1.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  precip_days <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb71-4"><a href="assignment-1.html#cb71-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(month, day, year, site)<span class="sc">%&gt;%</span></span>
+<span id="cb71-5"><a href="assignment-1.html#cb71-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span> (yr <span class="sc">==</span> year) </span>
+<span id="cb71-6"><a href="assignment-1.html#cb71-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-7"><a href="assignment-1.html#cb71-7" aria-hidden="true" tabindex="-1"></a>  precipgraph <span class="ot">&lt;-</span></span>
+<span id="cb71-8"><a href="assignment-1.html#cb71-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(precip_days, <span class="fu">aes</span>(<span class="at">x=</span> Date, <span class="at">y=</span> <span class="st">`</span><span class="at">precip [kg m-2 s-1]</span><span class="st">`</span>)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Date&#39;</span>, <span class="at">y=</span> <span class="st">&#39;Precip&#39;</span>, <span class="at">title =</span> yr)</span>
+<span id="cb71-9"><a href="assignment-1.html#cb71-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb71-10"><a href="assignment-1.html#cb71-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(precipgraph)</span>
+<span id="cb71-11"><a href="assignment-1.html#cb71-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb71-12"><a href="assignment-1.html#cb71-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-13"><a href="assignment-1.html#cb71-13" aria-hidden="true" tabindex="-1"></a><span class="co"># create a list of years to plot</span></span>
+<span id="cb71-14"><a href="assignment-1.html#cb71-14" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2003</span>, <span class="dv">2004</span>, <span class="dv">2005</span>, <span class="dv">2006</span>, <span class="dv">2007</span>, <span class="dv">2008</span>, <span class="dv">2009</span>, <span class="dv">2010</span>, <span class="dv">2011</span>)</span>
+<span id="cb71-15"><a href="assignment-1.html#cb71-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-16"><a href="assignment-1.html#cb71-16" aria-hidden="true" tabindex="-1"></a><span class="co"># create a for in loop</span></span>
+<span id="cb71-17"><a href="assignment-1.html#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (yr <span class="cf">in</span> years){</span>
+<span id="cb71-18"><a href="assignment-1.html#cb71-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">precipplotter</span>(forcing_data_full, year)</span>
+<span id="cb71-19"><a href="assignment-1.html#cb71-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/assign3%20bonus2b-1.png" width="672" /><img src="_main_files/figure-html/assign3%20bonus2b-2.png" width="672" /><img src="_main_files/figure-html/assign3%20bonus2b-3.png" width="672" /><img src="_main_files/figure-html/assign3%20bonus2b-4.png" width="672" /><img src="_main_files/figure-html/assign3%20bonus2b-5.png" width="672" /><img src="_main_files/figure-html/assign3%20bonus2b-6.png" width="672" /><img src="_main_files/figure-html/assign3%20bonus2b-7.png" width="672" /><img src="_main_files/figure-html/assign3%20bonus2b-8.png" width="672" /><img src="_main_files/figure-html/assign3%20bonus2b-9.png" width="672" /></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="simple-web-scraping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="assignment-4-lagos-spatial-analyses-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

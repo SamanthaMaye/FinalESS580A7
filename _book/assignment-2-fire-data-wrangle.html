@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Assignment 2: Fire Data Wrangle | ESS 580A7 Final</title>
+  <meta name="description" content="3 Assignment 2: Fire Data Wrangle | ESS 580A7 Final Bookdown" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Assignment 2: Fire Data Wrangle | ESS 580A7 Final" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="3 Assignment 2: Fire Data Wrangle | ESS 580A7 Final Bookdown" />
+  <meta name="github-repo" content="rstudio/finalbookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Assignment 2: Fire Data Wrangle | ESS 580A7 Final" />
+  
+  <meta name="twitter:description" content="3 Assignment 2: Fire Data Wrangle | ESS 580A7 Final Bookdown" />
+  
+
+<meta name="author" content="Samantha Clark" />
+
+
+<meta name="date" content="2022-03-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="assignment-1-rmarkdown-examples.html"/>
+<link rel="next" href="assignment-3-snow-functions-iteration.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.0/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html"><i class="fa fa-check"></i><b>2</b> Assignment 1: RMarkdown Examples</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#methods"><i class="fa fa-check"></i><b>2.1</b> Methods</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#site-description"><i class="fa fa-check"></i><b>2.1.1</b> Site Description</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#data-acquisition-and-plotting-tests"><i class="fa fa-check"></i><b>2.2</b> Data Acquisition and Plotting Tests</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#data-download"><i class="fa fa-check"></i><b>2.2.1</b> Data Download</a></li>
+<li class="chapter" data-level="2.2.2" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#static-data-plotter"><i class="fa fa-check"></i><b>2.2.2</b> Static Data Plotter</a></li>
+<li class="chapter" data-level="2.2.3" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#interactive-data-plotter"><i class="fa fa-check"></i><b>2.2.3</b> Interactive Data Plotter</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#assignment"><i class="fa fa-check"></i><b>2.3</b> Assignment</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#question-1-3"><i class="fa fa-check"></i><b>2.3.1</b> Question 1-3:</a></li>
+<li class="chapter" data-level="2.3.2" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#question-4"><i class="fa fa-check"></i><b>2.3.2</b> Question 4:</a></li>
+<li class="chapter" data-level="2.3.3" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#question-5"><i class="fa fa-check"></i><b>2.3.3</b> Question 5:</a></li>
+<li class="chapter" data-level="2.3.4" data-path="assignment-1-rmarkdown-examples.html"><a href="assignment-1-rmarkdown-examples.html#question-6-9"><i class="fa fa-check"></i><b>2.3.4</b> Question 6-9:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html"><i class="fa fa-check"></i><b>3</b> Assignment 2: Fire Data Wrangle</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-1"><i class="fa fa-check"></i><b>3.1</b> Question 1</a></li>
+<li class="chapter" data-level="3.2" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-2"><i class="fa fa-check"></i><b>3.2</b> Question 2</a></li>
+<li class="chapter" data-level="3.3" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-3"><i class="fa fa-check"></i><b>3.3</b> Question 3</a></li>
+<li class="chapter" data-level="3.4" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-4-1"><i class="fa fa-check"></i><b>3.4</b> Question 4</a></li>
+<li class="chapter" data-level="3.5" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#question-5-1"><i class="fa fa-check"></i><b>3.5</b> Question 5</a></li>
+<li class="chapter" data-level="3.6" data-path="assignment-2-fire-data-wrangle.html"><a href="assignment-2-fire-data-wrangle.html#bonus-question-redo-all-problems-with-spread-and-gather-using-modern-tidyverse-syntax.completed"><i class="fa fa-check"></i><b>3.6</b> Bonus Question: Redo all problems with <code>spread</code> and <code>gather</code> using modern tidyverse syntax.(Completed)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="assignment-3-snow-functions-iteration.html"><a href="assignment-3-snow-functions-iteration.html"><i class="fa fa-check"></i><b>4</b> Assignment 3: Snow Functions Iteration</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="assignment-3-snow-functions-iteration.html"><a href="assignment-3-snow-functions-iteration.html#simple-web-scraping"><i class="fa fa-check"></i><b>4.1</b> Simple web scraping</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="assignment-3-snow-functions-iteration.html"><a href="assignment-3-snow-functions-iteration.html#reading-an-html"><i class="fa fa-check"></i><b>4.1.1</b> Reading an html</a></li>
+<li class="chapter" data-level="4.1.2" data-path="assignment-3-snow-functions-iteration.html"><a href="assignment-3-snow-functions-iteration.html#data-download-1"><i class="fa fa-check"></i><b>4.1.2</b> Data Download</a></li>
+<li class="chapter" data-level="4.1.3" data-path="assignment-3-snow-functions-iteration.html"><a href="assignment-3-snow-functions-iteration.html#data-read-in"><i class="fa fa-check"></i><b>4.1.3</b> Data read-in</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="assignment-3-snow-functions-iteration.html"><a href="assignment-3-snow-functions-iteration.html#assignment-1"><i class="fa fa-check"></i><b>4.2</b> Assignment:</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html"><i class="fa fa-check"></i><b>5</b> Assignment 4: LAGOS Spatial Analyses 1</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html#lagos-analysis"><i class="fa fa-check"></i><b>5.1</b> LAGOS Analysis</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html#loading-in-data"><i class="fa fa-check"></i><b>5.1.1</b> Loading in data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html#in-class-work"><i class="fa fa-check"></i><b>5.2</b> In-Class work</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html#show-a-map-outline-of-iowa-and-illinois-similar-to-minnesota-map-upstream"><i class="fa fa-check"></i><b>5.2.1</b> 1) Show a map outline of Iowa and Illinois (similar to Minnesota map upstream)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html#subset-lagos-data-to-these-sites-how-many-sites-are-in-illinois-and-iowa-combined-how-does-this-compare-to-minnesota"><i class="fa fa-check"></i><b>5.2.2</b> 2) Subset LAGOS data to these sites, how many sites are in Illinois and Iowa combined? How does this compare to Minnesota?</a></li>
+<li class="chapter" data-level="5.2.3" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html#what-is-the-distribution-of-lake-size-in-iowa-vs.-minnesota"><i class="fa fa-check"></i><b>5.2.3</b> 3) What is the distribution of lake size in Iowa vs. Minnesota?</a></li>
+<li class="chapter" data-level="5.2.4" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html#make-an-interactive-plot-of-lakes-in-iowa-and-illinois-and-color-them-by-lake-area-in-hectares"><i class="fa fa-check"></i><b>5.2.4</b> 4) Make an interactive plot of lakes in Iowa and Illinois and color them by lake area in hectares</a></li>
+<li class="chapter" data-level="5.2.5" data-path="assignment-4-lagos-spatial-analyses-1.html"><a href="assignment-4-lagos-spatial-analyses-1.html#what-other-data-sources-might-we-use-to-understand-how-reservoirs-and-natural-lakes-vary-in-size-in-these-three-states"><i class="fa fa-check"></i><b>5.2.5</b> 5) What other data sources might we use to understand how reservoirs and natural lakes vary in size in these three states?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="assignment-5-lagos-spatial-analyses-2.html"><a href="assignment-5-lagos-spatial-analyses-2.html"><i class="fa fa-check"></i><b>6</b> Assignment 5: LAGOS Spatial Analyses 2</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="assignment-5-lagos-spatial-analyses-2.html"><a href="assignment-5-lagos-spatial-analyses-2.html#lagos-analysis-1"><i class="fa fa-check"></i><b>6.1</b> LAGOS Analysis</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="assignment-5-lagos-spatial-analyses-2.html"><a href="assignment-5-lagos-spatial-analyses-2.html#loading-in-data-1"><i class="fa fa-check"></i><b>6.1.1</b> Loading in data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="assignment-5-lagos-spatial-analyses-2.html"><a href="assignment-5-lagos-spatial-analyses-2.html#class-work"><i class="fa fa-check"></i><b>6.2</b> Class work</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="assignment-5-lagos-spatial-analyses-2.html"><a href="assignment-5-lagos-spatial-analyses-2.html#what-is-the-correlation-between-secchi-disk-depth-and-chlorophyll-a-for-sites-with-at-least-200-observations"><i class="fa fa-check"></i><b>6.2.1</b> 1) What is the correlation between Secchi Disk Depth and Chlorophyll a for sites with at least 200 observations?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="assignment-5-lagos-spatial-analyses-2.html"><a href="assignment-5-lagos-spatial-analyses-2.html#why-might-this-be-the-case"><i class="fa fa-check"></i><b>6.3</b> Why might this be the case?</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="assignment-5-lagos-spatial-analyses-2.html"><a href="assignment-5-lagos-spatial-analyses-2.html#what-states-have-the-most-data"><i class="fa fa-check"></i><b>6.3.1</b> 2) What states have the most data?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html"><i class="fa fa-check"></i><b>7</b> Assignment 6: Weather Corn Regressions</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#weather-data-analysis"><i class="fa fa-check"></i><b>7.1</b> Weather Data Analysis</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#load-the-prism-daily-maximum-temperatures"><i class="fa fa-check"></i><b>7.1.1</b> Load the PRISM daily maximum temperatures</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#temperature-trends"><i class="fa fa-check"></i><b>7.2</b> Temperature trends</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#summer-temperature-trends-winneshiek-county"><i class="fa fa-check"></i><b>7.2.1</b> Summer temperature trends: Winneshiek County</a></li>
+<li class="chapter" data-level="7.2.2" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#winter-temperatures---winneshiek-county"><i class="fa fa-check"></i><b>7.2.2</b> Winter Temperatures - Winneshiek County</a></li>
+<li class="chapter" data-level="7.2.3" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#multiple-regression-quadratic-time-trend"><i class="fa fa-check"></i><b>7.2.3</b> Multiple regression – Quadratic time trend</a></li>
+<li class="chapter" data-level="7.2.4" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#download-nass-corn-yield-data"><i class="fa fa-check"></i><b>7.2.4</b> Download NASS corn yield data</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#assignment-2"><i class="fa fa-check"></i><b>7.3</b> Assignment</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-1a-extract-winneshiek-county-corn-yields-fit-a-linear-time-trend-make-a-plot.-is-there-a-significant-time-trend"><i class="fa fa-check"></i><b>7.3.1</b> Question 1a: Extract Winneshiek County corn yields, fit a linear time trend, make a plot. Is there a significant time trend?</a></li>
+<li class="chapter" data-level="7.3.2" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-1b-fit-a-quadratic-time-trend-i.e.-year-year2-and-make-a-plot.-is-there-evidence-for-slowing-yield-growth"><i class="fa fa-check"></i><b>7.3.2</b> Question 1b: Fit a quadratic time trend (i.e., year + year^2) and make a plot. Is there evidence for slowing yield growth?</a></li>
+<li class="chapter" data-level="7.3.3" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-2-time-series-lets-analyze-the-relationship-between-temperature-and-yields-for-the-winneshiek-county-time-series.-use-data-on-yield-and-summer-avg-tmax.-is-adding-year-or-tmax2-to-your-model-helpful-make-a-plot-and-interpret-the-results."><i class="fa fa-check"></i><b>7.3.3</b> Question 2 – Time Series: Let’s analyze the relationship between temperature and yields for the Winneshiek County time series. Use data on yield and summer avg Tmax. Is adding year or Tmax^2 to your model helpful? Make a plot and interpret the results.</a></li>
+<li class="chapter" data-level="7.3.4" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-3-cross-section-analyze-the-relationship-between-temperature-and-yield-across-all-counties-in-2018.-is-there-a-relationship-interpret-the-results."><i class="fa fa-check"></i><b>7.3.4</b> Question 3 – Cross-Section: Analyze the relationship between temperature and yield across all counties in 2018. Is there a relationship? Interpret the results.</a></li>
+<li class="chapter" data-level="7.3.5" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-4-panel-one-way-to-leverage-multiple-time-series-is-to-group-all-data-into-what-is-called-a-panel-regression.-convert-the-county-id-code-countyfp-or-county_ansi-into-factor-using-as.factor-then-include-this-variable-in-a-regression-using-all-counties-yield-and-summer-temperature-data.-how-does-the-significance-of-your-temperature-coefficients-tmax-tmax2-change-make-a-plot-comparing-actual-and-fitted-yields-and-interpret-the-results-of-your-model."><i class="fa fa-check"></i><b>7.3.5</b> Question 4 – Panel: One way to leverage multiple time series is to group all data into what is called a “panel” regression. Convert the county ID code (“countyfp” or “county_ansi”) into factor using as.factor, then include this variable in a regression using all counties’ yield and summer temperature data. How does the significance of your temperature coefficients (Tmax, Tmax^2) change? Make a plot comparing actual and fitted yields and interpret the results of your model.</a></li>
+<li class="chapter" data-level="7.3.6" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#question-5-soybeans-download-nass-data-on-soybean-yields-and-explore-either-a-time-series-relationship-for-a-given-county-the-cross-sectional-relationship-for-a-given-year-or-a-panel-across-all-counties-and-years."><i class="fa fa-check"></i><b>7.3.6</b> Question 5 – Soybeans: Download NASS data on soybean yields and explore either a time series relationship for a given county, the cross-sectional relationship for a given year, or a panel across all counties and years.</a></li>
+<li class="chapter" data-level="7.3.7" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#bonus-find-a-package-to-make-a-county-map-of-iowa-displaying-some-sort-of-information-about-yields-or-weather.-interpret-your-map."><i class="fa fa-check"></i><b>7.3.7</b> Bonus: Find a package to make a county map of Iowa displaying some sort of information about yields or weather. Interpret your map.</a></li>
+<li class="chapter" data-level="7.3.8" data-path="assignment-6-weather-corn-regressions.html"><a href="assignment-6-weather-corn-regressions.html#bonus-2-challenge-question---map-trends-in-corn-yields-by-county-across-iowa.-interpret-your-map."><i class="fa fa-check"></i><b>7.3.8</b> Bonus #2: Challenge question - map trends in corn yields by county across Iowa. Interpret your map.</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ESS 580A7 Final</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="assignment-2-fire-data-wrangle" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Assignment 2: Fire Data Wrangle</h1>
+<p>title: “Hayman Fire Recovery”
+author: “Samantha Clark”
+date: “10/3/2019”
+output:
+html_document: default
+pdf_document: default</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="assignment-2-fire-data-wrangle.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare Libraries Needed</span></span>
+<span id="cb5-2"><a href="assignment-2-fire-data-wrangle.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-3"><a href="assignment-2-fire-data-wrangle.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb5-4"><a href="assignment-2-fire-data-wrangle.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb5-5"><a href="assignment-2-fire-data-wrangle.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb5-6"><a href="assignment-2-fire-data-wrangle.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb5-7"><a href="assignment-2-fire-data-wrangle.html#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="assignment-2-fire-data-wrangle.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Now that we have learned how to munge (manipulate) data</span></span>
+<span id="cb5-9"><a href="assignment-2-fire-data-wrangle.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># and plot it, we will work on using these skills in new ways</span></span>
+<span id="cb5-10"><a href="assignment-2-fire-data-wrangle.html#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="assignment-2-fire-data-wrangle.html#cb5-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_knit<span class="sc">$</span><span class="fu">set</span>(<span class="at">root.dir=</span><span class="st">&#39;.&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="assignment-2-fire-data-wrangle.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">####-----Reading in Data and Stacking it ----- ####</span></span>
+<span id="cb6-2"><a href="assignment-2-fire-data-wrangle.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Reading in files</span></span>
+<span id="cb6-3"><a href="assignment-2-fire-data-wrangle.html#cb6-3" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&#39;./data&#39;</span>,<span class="at">full.names=</span>T)</span>
+<span id="cb6-4"><a href="assignment-2-fire-data-wrangle.html#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="assignment-2-fire-data-wrangle.html#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="assignment-2-fire-data-wrangle.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Read in individual data files</span></span>
+<span id="cb6-7"><a href="assignment-2-fire-data-wrangle.html#cb6-7" aria-hidden="true" tabindex="-1"></a>ndmi <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(files[<span class="dv">1</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-8"><a href="assignment-2-fire-data-wrangle.html#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">burned=</span><span class="dv">2</span>,<span class="at">unburned=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="assignment-2-fire-data-wrangle.html#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data=</span><span class="st">&#39;ndmi&#39;</span>)</span>
+<span id="cb6-10"><a href="assignment-2-fire-data-wrangle.html#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="assignment-2-fire-data-wrangle.html#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="assignment-2-fire-data-wrangle.html#cb6-12" aria-hidden="true" tabindex="-1"></a>ndsi <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(files[<span class="dv">2</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-13"><a href="assignment-2-fire-data-wrangle.html#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">burned=</span><span class="dv">2</span>,<span class="at">unburned=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="assignment-2-fire-data-wrangle.html#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data=</span><span class="st">&#39;ndsi&#39;</span>)</span>
+<span id="cb6-15"><a href="assignment-2-fire-data-wrangle.html#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="assignment-2-fire-data-wrangle.html#cb6-16" aria-hidden="true" tabindex="-1"></a>ndvi <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(files[<span class="dv">3</span>])<span class="sc">%&gt;%</span> </span>
+<span id="cb6-17"><a href="assignment-2-fire-data-wrangle.html#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">burned=</span><span class="dv">2</span>,<span class="at">unburned=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-18"><a href="assignment-2-fire-data-wrangle.html#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data=</span><span class="st">&#39;ndvi&#39;</span>)</span>
+<span id="cb6-19"><a href="assignment-2-fire-data-wrangle.html#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="assignment-2-fire-data-wrangle.html#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack as a tidy dataset</span></span>
+<span id="cb6-21"><a href="assignment-2-fire-data-wrangle.html#cb6-21" aria-hidden="true" tabindex="-1"></a>full_long <span class="ot">&lt;-</span> <span class="fu">rbind</span>(ndvi,ndmi,ndsi) <span class="sc">%&gt;%</span></span>
+<span id="cb6-22"><a href="assignment-2-fire-data-wrangle.html#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key=</span><span class="st">&#39;site&#39;</span>,<span class="at">value=</span><span class="st">&#39;value&#39;</span>,<span class="sc">-</span>DateTime,<span class="sc">-</span>data) <span class="sc">%&gt;%</span></span>
+<span id="cb6-23"><a href="assignment-2-fire-data-wrangle.html#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(value))</span></code></pre></div>
+<div id="question-1" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Question 1</h2>
+<p>What is the correlation between NDVI and NDMI? - here I want you to convert the full_long dataset in to a wide dataset using the function “spread” and then make a plot that shows the correlation as a function of if the site was burned or not (x axis should be ndmi)
+You should exclude winter months and focus on summer months</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="assignment-2-fire-data-wrangle.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert data from long format to wide format</span></span>
+<span id="cb7-2"><a href="assignment-2-fire-data-wrangle.html#cb7-2" aria-hidden="true" tabindex="-1"></a>full_wide <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(full_long, <span class="at">names_from =</span> <span class="st">&quot;data&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb7-3"><a href="assignment-2-fire-data-wrangle.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="assignment-2-fire-data-wrangle.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select months and plot NDVI vs NDMI</span></span>
+<span id="cb7-5"><a href="assignment-2-fire-data-wrangle.html#cb7-5" aria-hidden="true" tabindex="-1"></a>full_wide <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="assignment-2-fire-data-wrangle.html#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span><span class="fu">month</span>(DateTime), <span class="at">year=</span><span class="fu">year</span>(DateTime)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="assignment-2-fire-data-wrangle.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="assignment-2-fire-data-wrangle.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>ndmi, <span class="at">y=</span>ndvi,<span class="at">color=</span>site)) <span class="sc">+</span><span class="fu">geom_point</span>() <span class="sc">+</span><span class="fu">geom_smooth</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&#39;Figure 1: NDVI vs NDMI&#39;</span>) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;NDMI&#39;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&#39;NDVI&#39;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 11 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 11 rows containing missing values (geom_point).</code></pre>
+<p><img src="_main_files/figure-html/assign1%20ques1-1.png" width="672" /></p>
+<p>Overall NDMI and NDVI are positively correlated, so as moisture increases, so does vegetation. However, at a certain point, when moisture becomes too high, vegetation no longer increases and either plateaus or decreases. This is understandable for instances of snow, or if vegetation has a very specific range of moisture in which it thrives. If the NDMI is above the vegetation’s upper moisture limit, the vegetation may begin to suffer, and therefore NDVI would decrease.
+There is also a difference between the trend for the unburned site and the burned site. Overall, vegetation is lower for the burned site no matter the moisture level. This makes sense as the burned site has fire damage, which will impact the vegetation for years after the fire. Overall, both of the trends are positively correlated to about the same point.</p>
+</div>
+<div id="question-2" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Question 2</h2>
+<p>What is the correlation between average NDSI (normalized
+snow index) for January - April and average NDVI for June-August?
+In other words, does the previous year’s snow cover influence vegetation growth for the following summer?</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="assignment-2-fire-data-wrangle.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert NDVI dataset</span></span>
+<span id="cb11-2"><a href="assignment-2-fire-data-wrangle.html#cb11-2" aria-hidden="true" tabindex="-1"></a>ndvi_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(ndvi, <span class="at">cols =</span> <span class="fu">c</span>(burned, unburned), <span class="at">names_to =</span> <span class="st">&quot;site&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="assignment-2-fire-data-wrangle.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(value)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="assignment-2-fire-data-wrangle.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">value =</span> <span class="fu">as.numeric</span>(value))</span>
+<span id="cb11-5"><a href="assignment-2-fire-data-wrangle.html#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="assignment-2-fire-data-wrangle.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#find averages for each year, for June- August</span></span>
+<span id="cb11-7"><a href="assignment-2-fire-data-wrangle.html#cb11-7" aria-hidden="true" tabindex="-1"></a>NDVI_avgs <span class="ot">&lt;-</span> ndvi_long <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="assignment-2-fire-data-wrangle.html#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span><span class="fu">month</span>(DateTime), <span class="at">year=</span><span class="fu">year</span>(DateTime)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="assignment-2-fire-data-wrangle.html#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-10"><a href="assignment-2-fire-data-wrangle.html#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, data) <span class="sc">%&gt;%</span></span>
+<span id="cb11-11"><a href="assignment-2-fire-data-wrangle.html#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(value))</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="assignment-2-fire-data-wrangle.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert NDSI dataset</span></span>
+<span id="cb13-2"><a href="assignment-2-fire-data-wrangle.html#cb13-2" aria-hidden="true" tabindex="-1"></a>ndsi_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(ndsi, <span class="at">cols =</span> <span class="fu">c</span>(burned, unburned), <span class="at">names_to =</span> <span class="st">&quot;site&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="assignment-2-fire-data-wrangle.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(value)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="assignment-2-fire-data-wrangle.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">value =</span> <span class="fu">as.numeric</span>(value))</span>
+<span id="cb13-5"><a href="assignment-2-fire-data-wrangle.html#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="assignment-2-fire-data-wrangle.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#find averages for each year, for January-April</span></span>
+<span id="cb13-7"><a href="assignment-2-fire-data-wrangle.html#cb13-7" aria-hidden="true" tabindex="-1"></a>NDSI_avgs <span class="ot">&lt;-</span> ndsi_long <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="assignment-2-fire-data-wrangle.html#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span><span class="fu">month</span>(DateTime), <span class="at">year=</span><span class="fu">year</span>(DateTime)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="assignment-2-fire-data-wrangle.html#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-10"><a href="assignment-2-fire-data-wrangle.html#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, data) <span class="sc">%&gt;%</span></span>
+<span id="cb13-11"><a href="assignment-2-fire-data-wrangle.html#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(value))</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="assignment-2-fire-data-wrangle.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#merge datasets</span></span>
+<span id="cb15-2"><a href="assignment-2-fire-data-wrangle.html#cb15-2" aria-hidden="true" tabindex="-1"></a>finaldf <span class="ot">=</span> <span class="fu">rbind</span>(NDSI_avgs, NDVI_avgs)</span>
+<span id="cb15-3"><a href="assignment-2-fire-data-wrangle.html#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="assignment-2-fire-data-wrangle.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plot</span></span>
+<span id="cb15-5"><a href="assignment-2-fire-data-wrangle.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(finaldf) <span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>mean, <span class="at">color=</span>data) <span class="sc">+</span><span class="fu">geom_point</span>() <span class="sc">+</span><span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&#39;Figure 2: Snow Effect on Vegetation&#39;</span>) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;Year&#39;</span>) <span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&#39;Mean&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/ques2%20assign2-1.png" width="672" /></p>
+<p>It appears that there is not a trend between snow fall in January-April and vegetation in June-August. The range in snow index does not have a large effect on vegetation index. For example, the large drop in average snow index in 1988 does not have an impact on the vegetation. This is an interesting lack of relationship, as I would expect the amount of snow to have a large impact on the greenness for the upcoming season.</p>
+</div>
+<div id="question-3" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Question 3</h2>
+<p>How is the snow effect from question 2 different between pre- and post-burn and burned and unburned?</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="assignment-2-fire-data-wrangle.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#find averages for each year, for January-April</span></span>
+<span id="cb16-2"><a href="assignment-2-fire-data-wrangle.html#cb16-2" aria-hidden="true" tabindex="-1"></a>NDSI_avgs2 <span class="ot">&lt;-</span> ndsi_long <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="assignment-2-fire-data-wrangle.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span><span class="fu">month</span>(DateTime), <span class="at">year=</span><span class="fu">year</span>(DateTime)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="assignment-2-fire-data-wrangle.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="assignment-2-fire-data-wrangle.html#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, data, site) <span class="sc">%&gt;%</span></span>
+<span id="cb16-6"><a href="assignment-2-fire-data-wrangle.html#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(value))</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;data&#39;. You can override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="assignment-2-fire-data-wrangle.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#find averages for each year, for June- August</span></span>
+<span id="cb18-2"><a href="assignment-2-fire-data-wrangle.html#cb18-2" aria-hidden="true" tabindex="-1"></a>NDVI_avgs2 <span class="ot">&lt;-</span> ndvi_long <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="assignment-2-fire-data-wrangle.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span><span class="fu">month</span>(DateTime), <span class="at">year=</span><span class="fu">year</span>(DateTime)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="assignment-2-fire-data-wrangle.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="assignment-2-fire-data-wrangle.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, data, site) <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="assignment-2-fire-data-wrangle.html#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(value))</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;data&#39;. You can override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="assignment-2-fire-data-wrangle.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#merge datasets</span></span>
+<span id="cb20-2"><a href="assignment-2-fire-data-wrangle.html#cb20-2" aria-hidden="true" tabindex="-1"></a>finaldf2 <span class="ot">=</span> <span class="fu">rbind</span>(NDSI_avgs2, NDVI_avgs2)</span>
+<span id="cb20-3"><a href="assignment-2-fire-data-wrangle.html#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="assignment-2-fire-data-wrangle.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plot</span></span>
+<span id="cb20-5"><a href="assignment-2-fire-data-wrangle.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(finaldf2) <span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>mean, <span class="at">color=</span>data, <span class="at">shape =</span> site) <span class="sc">+</span><span class="fu">geom_point</span>() <span class="sc">+</span><span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&#39;Figure 3: Snow Effect on Vegetation At Two Sites Before and After 2003 Fire&#39;</span>) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;Year&#39;</span>) <span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&#39;Mean&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/ques3%20assign2-1.png" width="672" /></p>
+<p>The fire occurred in 2003, and before the fire there is not a large difference between the NDVI for the (future) burned vs unburned areas. After the fire, there is a large difference between NDVI for burned vs unburned, which is to be expected as fires can impact vegetation for decades after the fire actually happens. Post-burn, it appears that NDSI has a larger impact on NDVI than pre-burn. This would make sense, as vegetation is likely more succeptible to its surroundings and less able to adapt.</p>
+</div>
+<div id="question-4-1" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Question 4</h2>
+<p>What month is the greenest month on average?</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="assignment-2-fire-data-wrangle.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create month column</span></span>
+<span id="cb21-2"><a href="assignment-2-fire-data-wrangle.html#cb21-2" aria-hidden="true" tabindex="-1"></a>monthndvi <span class="ot">&lt;-</span> ndvi_long <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="assignment-2-fire-data-wrangle.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span><span class="fu">month</span>(DateTime))</span>
+<span id="cb21-4"><a href="assignment-2-fire-data-wrangle.html#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="assignment-2-fire-data-wrangle.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#find means by month</span></span>
+<span id="cb21-6"><a href="assignment-2-fire-data-wrangle.html#cb21-6" aria-hidden="true" tabindex="-1"></a>monthlymeans_NDVI <span class="ot">&lt;-</span> monthndvi <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="assignment-2-fire-data-wrangle.html#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="assignment-2-fire-data-wrangle.html#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(value))</span>
+<span id="cb21-9"><a href="assignment-2-fire-data-wrangle.html#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="assignment-2-fire-data-wrangle.html#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#create a table</span></span>
+<span id="cb21-11"><a href="assignment-2-fire-data-wrangle.html#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(monthlymeans_NDVI, <span class="at">caption =</span> <span class="st">&#39;NDVI Averages by Month&#39;</span>)</span></code></pre></div>
+<table>
+<caption>(#tab:ques4 assign2)NDVI Averages by Month</caption>
+<thead>
+<tr class="header">
+<th align="right">month</th>
+<th align="right">mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.2186012</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">0.1986539</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.2019000</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.2501716</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">0.3036180</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">0.3512811</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">0.3633104</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">0.3871568</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">0.3827147</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">0.3570475</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">0.2852874</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">0.2513979</td>
+</tr>
+</tbody>
+</table>
+<p>NDVI is the normalized difference vegetation index, and determines the density of green on land. As such, I can find the average NDVI of different months and determine which month, on average, is the greenest. The averages range from 0.1986 (February) to 0.3871 (August). In other words, August was the greenest month on average. The second greenest was September at 0.3827. The least greenest month was February at 0.1986.</p>
+</div>
+<div id="question-5-1" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Question 5</h2>
+<p>What month is the snowiest on average?</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="assignment-2-fire-data-wrangle.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create a month column</span></span>
+<span id="cb22-2"><a href="assignment-2-fire-data-wrangle.html#cb22-2" aria-hidden="true" tabindex="-1"></a>monthndsi <span class="ot">&lt;-</span> ndsi_long <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="assignment-2-fire-data-wrangle.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month=</span><span class="fu">month</span>(DateTime))</span>
+<span id="cb22-4"><a href="assignment-2-fire-data-wrangle.html#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="assignment-2-fire-data-wrangle.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#find means by month</span></span>
+<span id="cb22-6"><a href="assignment-2-fire-data-wrangle.html#cb22-6" aria-hidden="true" tabindex="-1"></a>monthlymeans_NDSI <span class="ot">&lt;-</span> monthndsi <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="assignment-2-fire-data-wrangle.html#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb22-8"><a href="assignment-2-fire-data-wrangle.html#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(value))</span>
+<span id="cb22-9"><a href="assignment-2-fire-data-wrangle.html#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="assignment-2-fire-data-wrangle.html#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#create a table</span></span>
+<span id="cb22-11"><a href="assignment-2-fire-data-wrangle.html#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(monthlymeans_NDSI, <span class="at">caption =</span> <span class="st">&#39;NDSI Averages by Month&#39;</span>)</span></code></pre></div>
+<table>
+<caption>(#tab:ques5 assign2)NDSI Averages by Month</caption>
+<thead>
+<tr class="header">
+<th align="right">month</th>
+<th align="right">mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.2099584</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">0.1988183</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">-0.0420229</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">-0.2278234</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.4105171</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-0.4409882</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">-0.4504829</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">-0.4594660</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">-0.4539411</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">-0.4085219</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">-0.1151240</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">0.1241000</td>
+</tr>
+</tbody>
+</table>
+<p>NDSI is the normalized difference snow index, and detects the presence of snow on land. As such, I can find the average NDSI of different months and determine which month, on average, is the snowiest The averages range from -0.4594 (August) to 0.2099 (January). In other words, January was the snowiest month on average. The second snowiest was February at 0.1988. The least snowiest month was August at -0.4594.</p>
+</div>
+<div id="bonus-question-redo-all-problems-with-spread-and-gather-using-modern-tidyverse-syntax.completed" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Bonus Question: Redo all problems with <code>spread</code> and <code>gather</code> using modern tidyverse syntax.(Completed)</h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="assignment-1-rmarkdown-examples.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="assignment-3-snow-functions-iteration.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
